@@ -1,0 +1,28 @@
+@baseUrl = http://localhost:3000
+
+### Create an item
+POST {{baseUrl}}/items
+Content-Type: application/json
+
+{
+  "name": "not so much",
+  "quantity": 4
+}
+
+### Read all items
+GET {{baseUrl}}/items
+
+### Read a single item by ID
+GET {{baseUrl}}/items/66e319666532ba6f60ffa058
+
+### Update an item by ID
+PUT {{baseUrl}}/items/66e319666532ba6f60ffa057
+Content-Type: application/json
+
+{
+  "name": "Updated Item Name",
+  "quantity": 5
+}
+
+### Delete an item by ID
+DELETE {{baseUrl}}/items/66e319796532ba6f60ffa059

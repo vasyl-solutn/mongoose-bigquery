@@ -65,6 +65,19 @@ app.post('/items', async (req, res) => {
   }
 });
 
+app.get('/items/:id', async (req, res) => {
+  try {
+    const item = await Item.findById(req.params.id)
+    if (!item) {
+      return res.status(404).send({ error: 'Item not found' })
+    }
+    res.json(item);
+  } catch (err) {
+    console.error(err)
+    res.status(500).send({error: 'Internal Server Error'});
+  }
+})
+
 app.put('/items/:id', async (req, res) => {
   try {
     const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
