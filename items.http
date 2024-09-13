@@ -30,3 +30,12 @@ DELETE {{baseUrl}}/items/66e319796532ba6f60ffa059
 
 ###
 GET {{bigQueryUrl}}/data/1922
+
+### Create an item
+POST {{baseUrl}}/year-item
+Content-Type: application/json
+
+{
+  "year": 1902
+}
+

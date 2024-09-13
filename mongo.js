@@ -52,7 +52,6 @@ itemSchema.index({ name: 1, year: 1, gender: 1 }, { unique: true }); // Indexing
 
 const Item = mongoose.model('Item', itemSchema);
 
-const YearItem = require('./year-item');
 // Routes
 app.get('/items', async (req, res) => {
   try {
@@ -107,6 +106,20 @@ app.delete('/items/:id', async (req, res) => {
     res.status(204).send();
   } catch (err) {
     res.status(500).send({ error: 'Internal Server Error' });
+  }
+});
+
+const YearItem = require('./year-item');
+
+// Endpoint to post year item
+app.post('/year-item', async (req, res) => {
+  try {
+    const { year } = req.body;
+    const newItem = new YearItem({ year });
+    const savedItem = await newItem.save();
+    res.status(201).json(savedItem);
+  } catch (err) {
+    res.status(500).send({ error: 'Internal Server Error', details: err.message });
   }
 });
 
