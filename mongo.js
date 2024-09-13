@@ -52,6 +52,7 @@ itemSchema.index({ name: 1, year: 1, gender: 1 }, { unique: true }); // Indexing
 
 const Item = mongoose.model('Item', itemSchema);
 
+const YearItem = require('./year-item');
 // Routes
 app.get('/items', async (req, res) => {
   try {

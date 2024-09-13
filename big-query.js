@@ -23,20 +23,20 @@ app.get('/data/:year', async (req, res) => {
 
   try {
     const [rows] = await bigquery.query(query);
-    // TODO: re-use here async all
-    rows.forEach(async item => {
-      try {
-        await axios.post(`http://localhost:${process.env.PORT}/items`, {
-          name: `${item.name} ${item.number}`,
-          year: item.year,
-          gender: item.gender,
-          quantity: item.number
-        })
+    const promises = rows.map(item =>
+      axios.post(`http://localhost:${process.env.PORT}/items`, {
+        name: `${item.name} ${item.number}`,
+        year: item.year,
+        gender: item.gender,
+        quantity: item.number
+      }).then(() => {
         console.log('created: ', item)
-      } catch (err) {
-        console.error(err)
-      }
-    })
+      }).catch(err => {
+        console.error(err);
+      })
+    );
+
+    await Promise.all(promises);
     res.json(rows);
   } catch (error) {
     console.error('ERROR:', error);
