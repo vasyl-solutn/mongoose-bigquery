@@ -1,4 +1,5 @@
 @baseUrl = http://localhost:3000
+@bigQueryUrl = http://localhost:3001
 
 ### Create an item
 POST {{baseUrl}}/items
@@ -26,3 +27,6 @@ Content-Type: application/json
 
 ### Delete an item by ID
 DELETE {{baseUrl}}/items/66e319796532ba6f60ffa059
+
+###
+GET {{bigQueryUrl}}/data
