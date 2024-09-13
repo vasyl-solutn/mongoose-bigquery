@@ -29,4 +29,4 @@ Content-Type: application/json
 DELETE {{baseUrl}}/items/66e319796532ba6f60ffa059
 
 ###
-GET {{bigQueryUrl}}/data
+GET {{bigQueryUrl}}/data/1922

@@ -12,11 +12,13 @@ const bigquery = new BigQuery({
   keyFilename: `./sa-files/${process.env.SA_FILE}.json`
 });
 
-app.get('/data', async (req, res) => {
+app.get('/data/:year', async (req, res) => {
+  const { year } = req.params;
   const query = `
     SELECT name, year, gender, number
     FROM \`bigquery-public-data.usa_names.usa_1910_2013\`
-    LIMIT 10
+    WHERE year = ${year}
+    LIMIT 1000
   `;
 
   try {
@@ -25,7 +27,7 @@ app.get('/data', async (req, res) => {
     rows.forEach(async item => {
       try {
         await axios.post(`http://localhost:${process.env.PORT}/items`, {
-          name: item.name,
+          name: `${item.name} ${item.number}`,
           year: item.year,
           gender: item.gender,
           quantity: item.number
