@@ -29,8 +29,15 @@ const itemSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    trim: true,
-    unique: true
+    trim: true
+  },
+  gender: {
+    type: String,
+    required: true,
+  },
+  year: {
+    type: Number,
+    required: true,
   },
   quantity: {
     type: Number,
@@ -41,7 +48,7 @@ const itemSchema = new mongoose.Schema({
   timestamps: true
 });
 
-itemSchema.index({ name: 1 }); // Indexing for faster queries
+itemSchema.index({ name: 1, year: 1, gender: 1 }, { unique: true }); // Indexing for faster queries
 
 const Item = mongoose.model('Item', itemSchema);
 
