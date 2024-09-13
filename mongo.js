@@ -123,6 +123,17 @@ app.post('/year-item', async (req, res) => {
   }
 });
 
+// Endpoint to get limited year items
+app.get('/year-item', async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 10; // Default limit to 10 if not provided
+    const years = await YearItem.find().limit(limit);
+    res.json(years);
+  } catch (err) {
+    res.status(500).send({ error: 'Internal Server Error', details: err.message });
+  }
+});
+
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
