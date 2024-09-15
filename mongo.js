@@ -126,9 +126,19 @@ app.post('/year-item', async (req, res) => {
 // Endpoint to get limited year items
 app.get('/year-item', async (req, res) => {
   try {
+    const YEAR_START_SINCE = 1900;
+    const result = [];
     const limit = parseInt(req.query.limit) || 10; // Default limit to 10 if not provided
-    const years = await YearItem.find().limit(limit);
-    res.json(years);
+    const existing = await YearItem.find().select('year -_id');
+    const existingYears = existing.map(row => row.year);
+    let year = YEAR_START_SINCE;
+    while (year < 2024 && result.length < limit) {
+      if (!existingYears.includes(year)) {
+        result.push(year);
+      }
+      year++;
+    }
+    res.json(result);
   } catch (err) {
     res.status(500).send({ error: 'Internal Server Error', details: err.message });
   }
